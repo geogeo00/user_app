@@ -74,20 +74,11 @@ class _UserListPageState extends State<UserListPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
-                          onPressed: () {
-                            _currentPage = 1;
-                            _userBloc
-                                .add(FetchUserListEvent(page: _currentPage));
-                          },
-                          child: const Text("1")),
-                      TextButton(
-                          onPressed: () {
-                            _currentPage = 2;
-                            _userBloc
-                                .add(FetchUserListEvent(page: _currentPage));
-                          },
-                          child: const Text("2"))
+                      textButton(1),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      textButton(2),
                     ],
                   ),
                   const SizedBox(
@@ -104,5 +95,27 @@ class _UserListPageState extends State<UserListPage> {
         ),
       ),
     );
+  }
+
+  Widget textButton(int index) {
+    return TextButton(
+        onPressed: () {
+          _currentPage = _currentPage == 2 ? 1 : 2;
+          _userBloc.add(FetchUserListEvent(page: _currentPage));
+        },
+        child: Container(
+            height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+                color: index != _currentPage
+                    ? Colors.transparent
+                    : Colors.blueAccent,
+                borderRadius: BorderRadius.circular(50)),
+            child: Center(
+                child: Text(
+              index.toString(),
+              style: TextStyle(
+                  color: index != _currentPage ? Colors.black : Colors.white),
+            ))));
   }
 }
